@@ -1,7 +1,11 @@
 import SwiftUI
 
+
+/// The direction of the transition from one page to another
 public enum Direction {
+	/// Moving from left to right
 	case forward
+	/// Moving from right to left
 	case reverse
 
 	var toNavigationDirection: UIPageViewController.NavigationDirection {
@@ -22,7 +26,17 @@ public struct LazyLoadingPagerView<Content: View, Data: Hashable>: View {
 	let previousData: (Data) -> Data?
 	let nextData: (Data) -> Data?
 	let scrollDirection: (Data, Data) -> Direction
-
+	
+	/// LazyLoadingPagerView
+	/// - Parameters:
+	///   - data: Inject a binding to keep the current `data` on screen
+	///   - initialContent: The initial view to be presented according to the passed `data`.
+	///   - previous: The previous view of the passed `data`
+	///   - next: The next view of the passed `data`
+	///   - previousData: The previous item of the passed `data`
+	///   - nextData: The next item of the passed `data`
+	///   - scrollDirection: The direction to navigate from the first argument to the second.
+	///   eg. if `$0 < $1` the direction should be `.forward` for a transition moving from left to right
 	public init(data: Binding<Data>,
 				initialContent: @escaping (Data) -> Content,
 				previous: @escaping (Data) -> Content?,
